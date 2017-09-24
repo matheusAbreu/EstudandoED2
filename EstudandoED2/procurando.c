@@ -3,8 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 int procurandoOMaior(int *x, int tam)
 {
     int maior = x[0], j, temp =0;
@@ -71,7 +69,7 @@ void procurandoMaiorPosi(int *x, int *pos, int *maior,int tam)
          if(x[tam -1] > *maior)
          {
              *pos = (tam - 1);
-             *maior = temp;
+             *maior = x[tam -1];
          }
     }
     else
@@ -127,7 +125,7 @@ void procurandoMenorPosi(int *x, int *pos, int *menor,int tam)
          if(x[tam -1] < *menor)
          {
              *pos = (tam - 1);
-             *menor = temp;
+             *menor = x[tam -1];
          }
     }
     else
@@ -243,7 +241,7 @@ int procurandoChave(int *x, int tam)
         temp ++;
     return temp;
 }
-void procurandoMaioMenor(int *vet, int *men, int *mai, int tam)
+void procurandoMaiorEMenor(int *vet, int *men, int *mai, int tam)
 {
      int j, tempMaior =vet[0], tempMenor = vet[0];
 
@@ -301,4 +299,16 @@ void procurandoMaioMenor(int *vet, int *men, int *mai, int tam)
     }
      *men = tempMenor;
      *mai = tempMaior;
+}
+void imprimindoVet(int *x, int tam)
+{
+    int i;
+    for(i =0; i < tam; i++)
+    {
+        if((i%10)==0 && i !=0)
+            printf("\n");
+        
+        printf("%d\t",x[i]);
+    }
+    printf("\n");
 }

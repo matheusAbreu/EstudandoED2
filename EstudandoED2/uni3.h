@@ -18,8 +18,8 @@
 extern "C" {
 #endif
 
-void ordenandoInteiros(int *x, int tam);
-
+void ordenandoInteirosCresc(int *x, int tam);
+void ordenandoInteirosDecresc(int *x, int tam);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 56
+#define MAX 100
 #include "procurando.h"
 #include "uni3.h"
 
@@ -18,7 +18,10 @@ void main()
         printf("%d\t",vet[i]);
 
     }
-
-    procurandoMaiorPosi(vet, &j, &i, MAX);
-    printf("\n\n\nO maior valor encontrado e: %d\nna posicao: %d", i,j);
+    printf("\n\n\n\n\n");
+    
+       
+    ordenandoInteirosDecresc(vet, MAX);
+    imprimindoVet(vet, MAX);
+     
 }
