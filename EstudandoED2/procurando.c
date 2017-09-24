@@ -151,6 +151,7 @@ void procurandoMenorPosi(int *x, int *pos, int *menor,int tam)
         }
         
     }
+    
 }
 int procurandoOMenor(int *x, int tam)
 {

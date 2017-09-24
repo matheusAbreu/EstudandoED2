@@ -1,36 +1,23 @@
 #include "procurando.h"
-void ordenandoInteirosCresc(int *x, int tam)//Analise do cod 00
-{
-    int posTemp, valorTemp,j, aux[tam];
+#include <stdio.h>
+#include <stdlib.h>
+void ordenandoInteirosCresc(int *x, int tam)//Algoritmo de ordenação tipo bolha
+{//Esse algoritmo segundo o slide é um (n²-n)/2
+    int i,j, aux;
     
-   for(j = 0; j < tam ; j++)
-    {   
-      procurandoMenorPosi(x, &posTemp, &valorTemp, tam);
-      
-      aux[j] = valorTemp;
-      x[posTemp] = (tam*10000);
-      posTemp =0;
-      valorTemp = 0;
-      
-      /*O teste abaixo, teoricamente, posibilitaria que a ordenação ocorresse no momento da leitura
-       * porém não consegui torna-lo efetivo, problemas encontrados:
-       * copiar numeros
-       * pular valores na ordenação
-        
-       Se estivesse funcionando não precisaria de um vetor auxiliar, e com isso, tbm poderia ser discartado o for final
-      if(x[j]> x[(posTemp+j)])
-      {
-        aux = x[j];
-        x[j] = valorTemp;
-        x[(posTemp+j)] = aux;
-        aux = 0;
-      }*/
-    }
-    for(j=0;j<tam;j++)
-        x[j] = aux[j];
-   
+   for(j = tam; j >=1 ; j--)//Segundo o metodo dispoto, temos que percorrer a lista n vezes
+       for(i = 1; i<tam; i++)//E em nossa comparativa, por pularmos o primeiro index, graças ao tipo de compração temos (n -1) comparações
+           if(x[i] < x[i-1])//Logica da solução: compare um index com o anterior, caso seja menor, troca
+           {
+               aux = x[i];
+               x[i]= x[i-1];
+               x[i-1] = aux;
+              // imprimindoVet(x, tam); //impressao auxiliar
+           }
+       
+   //
 }
-void ordenandoInteirosDecresc(int *x, int tam)
+void ordenandoInteirosDecresc(int *x, int tam)//Analise do cod 00
 {
     int posTemp, valorTemp,j, aux[tam];
     
