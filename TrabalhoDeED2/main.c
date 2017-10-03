@@ -1,31 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ArvoreDeExecucao.h"
+#define MAX 50
+//Definindo pro compilador: limpador de buffer e limpador de tela
+#if linux
+#define LIMBUF __fpurge(stdin)
+#define CLEARSCREEN system("clear")
+#endif  //linux
+#if WIN32
+#define LIMBUF fflush(stdin)
+#define CLEARSCREEN system("cls")
+#endif // WIN32
 /*
  * 
  */
 int main(int argc, char** argv)
 {
+   // y = atoi(testando);
+    int i;
+    char express[MAX];
     tree *test;
     test = criandoRamo();
-    escrevendoNULL(test);
-    test->valor = 10;
     
-    test->dir = criandoRamo();
-    test->esq = criandoRamo();
-    escrevendoNULL(test->dir);
-    escrevendoNULL(test->esq);
+    scanf("%s", express);
+    LIMBUF;
     
-    test->dir->dir = criandoRamo();
-    escrevendoNULL(test->dir->dir);
+    printf("\n%s\n", express);
+    i = strlen(express);
     
-    test->dir->valor = 50;
-    test->dir->dir->valor = 50;
-    
-    imprimindoArvore(test, 0);
-    printf("\n");
+    escrevendoExpresao(test, express,i);
+    imprimindoArvore(test,0);
     cortandoGalho(test);
-    imprimindoArvore(test, 0);
+    
     return (EXIT_SUCCESS);
 }
 

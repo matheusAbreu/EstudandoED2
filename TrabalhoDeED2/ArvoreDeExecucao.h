@@ -16,6 +16,8 @@ extern "C" {
     void escrevendoNULL(tree *x);
     void cortandoGalho(tree *x);
     void imprimindoArvore(tree *x, int nivel);
+    void escrevendoExpresao(tree *x, char *ex, int tam);
+    int testaNumero(char x);//retorna 1 se for numero e 0 caso nao
 
 #ifdef __cplusplus
 }
