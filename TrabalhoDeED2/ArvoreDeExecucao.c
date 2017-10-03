@@ -57,7 +57,7 @@ void imprimindoArvore(tree *x, int nivel)
     aux[nivel] = '\0';
     
     if(testaGalhoInfoNula(x))
-        printf("\n%sValor Nulo", aux);
+        printf("\n%sNULL", aux);
     else if(x->valor != NULL)
         printf("\n%s%d",aux, x->valor);
     else
@@ -68,6 +68,19 @@ void imprimindoArvore(tree *x, int nivel)
     
     if(x->dir != NULL)
         imprimindoArvore(x->dir, (nivel +1));
+}
+void imprimindoEmPosFixa(tree *x)
+{
+    if(x->dir != NULL)
+    imprimindoEmPosFixa(x->dir);
+    
+    if(x->esq != NULL)
+    imprimindoEmPosFixa(x->esq);
+    
+    if(x->express == NULL)
+        printf("%d ", x->valor);
+    else
+        printf("%c ", x->express);
 }
 void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
 
@@ -99,6 +112,48 @@ void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
             j = 0;
             y->express = ex[i];
             escrevendoNULL(y->esq);
+            y=y->esq;
+         }
+         else if(ex[i] == '*' || ex[i] == '/')
+         {
+            y->dir=criandoRamo();
+            escrevendoNULL(y->dir);
+            pnt = y;
+            y = y->dir;
+            y->dir=criandoRamo();
+            escrevendoNULL(y->dir);
+            y->dir->valor=atoi(aux);
+            for(k=0;k<j;k++)
+                aux[k]='\0';
+            j = 0;
+            
+            y->express = ex[i];
+            i++;
+            
+            for(;i < tam;i++)
+            {
+                if(testaNumero(ex[i]))
+                {
+                   aux[j]=ex[i];
+                   aux[j+1] = '\0';
+                   j++;
+                }else
+                    break;
+            }
+            
+            y->esq=criandoRamo();
+            escrevendoNULL(y->esq);
+            y->esq->valor=atoi(aux);
+            for(k=0;k<j;k++)
+                aux[k]='\0';
+            j = 0;
+            
+            y = pnt;
+            pnt = NULL;
+            
+            y->esq=criandoRamo();
+            escrevendoNULL(y->esq);
+            y->express = ex[i];
             y=y->esq;
          }
         /* else

@@ -31,6 +31,8 @@ int main(int argc, char** argv)
     
     escrevendoExpresao(test, express,i);
     imprimindoArvore(test,0);
+    printf("\n\n");
+    imprimindoEmPosFixa(test);
     cortandoGalho(test);
     
     return (EXIT_SUCCESS);

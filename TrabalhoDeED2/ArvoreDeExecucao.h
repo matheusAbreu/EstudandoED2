@@ -18,7 +18,8 @@ extern "C" {
     void imprimindoArvore(tree *x, int nivel);
     void escrevendoExpresao(tree *x, char *ex, int tam);
     int testaNumero(char x);//retorna 1 se for numero e 0 caso nao
-
+    void imprimindoEmPosFixa(tree *x);
+    
 #ifdef __cplusplus
 }
 #endif
