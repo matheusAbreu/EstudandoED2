@@ -6,7 +6,7 @@ extern "C" {
 #endif
     typedef struct ARVORE
     {
-        int valor;
+        float valor;
         char express;
         struct ARVORE *dir, *esq;
     }tree;
@@ -19,6 +19,7 @@ extern "C" {
     void escrevendoExpresao(tree *x, char *ex, int tam);
     int testaNumero(char x);//retorna 1 se for numero e 0 caso nao
     void imprimindoEmPosFixa(tree *x);
+    float calculandoArvore(tree *x);
     
 #ifdef __cplusplus
 }

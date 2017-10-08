@@ -21,11 +21,11 @@ void escrevendoNULL(tree *x)
     x->dir = NULL;
     x->esq = NULL;
     x->express = NULL;
-    x->valor = NULL;
+    x->valor = 0.0f;
 }
 int testaGalhoInfoNula(tree *x)
 {
-    if(x->express == NULL && x->valor == NULL)
+    if(x->express == NULL && x->valor == 0.0f)
         return 1;
     else
         return 0;
@@ -58,8 +58,8 @@ void imprimindoArvore(tree *x, int nivel)
     
     if(testaGalhoInfoNula(x))
         printf("\n%sNULL", aux);
-    else if(x->valor != NULL)
-        printf("\n%s%d",aux, x->valor);
+    else if(x->valor != 0.0f)
+        printf("\n%s%.2f",aux, x->valor);
     else
         printf("\n%s%c", aux, x->express);
     
@@ -78,7 +78,7 @@ void imprimindoEmPosFixa(tree *x)
     imprimindoEmPosFixa(x->esq);
     
     if(x->express == NULL)
-        printf("%d ", x->valor);
+        printf("%.2f ", x->valor);
     else
         printf("%c ", x->express);
 }
@@ -105,7 +105,7 @@ void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
             y->dir=criandoRamo();
             y->esq=criandoRamo();
             escrevendoNULL(y->dir);
-            y->dir->valor=atoi(aux);
+            y->dir->valor=atof(aux);
             for(k=0;k<j;k++)
                 aux[k]='\0';
 
@@ -122,7 +122,7 @@ void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
             y = y->dir;
             y->dir=criandoRamo();
             escrevendoNULL(y->dir);
-            y->dir->valor=atoi(aux);
+            y->dir->valor=atof(aux);
             for(k=0;k<j;k++)
                 aux[k]='\0';
             j = 0;
@@ -143,7 +143,7 @@ void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
             
             y->esq=criandoRamo();
             escrevendoNULL(y->esq);
-            y->esq->valor=atoi(aux);
+            y->esq->valor=atof(aux);
             for(k=0;k<j;k++)
                 aux[k]='\0';
             j = 0;
@@ -167,7 +167,7 @@ void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
         
     }
     if(j > 0)
-      y->valor=atoi(aux);
+      y->valor=atof(aux);
     
     
 }
@@ -177,4 +177,30 @@ int testaNumero(char x)
         return 1;
     else
         return 0;
+}
+float calculandoArvore(tree *x)
+{
+    float aux;
+    if(x->valor != 0.0f)
+        return x->valor;
+    else if(x->express != NULL)
+        switch(x->express)
+        {
+            case '+':
+                aux =(calculandoArvore(x->dir) + calculandoArvore(x->esq));
+            break;
+            case '-':
+                aux =(calculandoArvore(x->dir) - calculandoArvore(x->esq));
+            break;
+            case '*':
+                aux =(calculandoArvore(x->dir) * calculandoArvore(x->esq));
+            break;
+            case '/':
+                aux =(calculandoArvore(x->dir) / calculandoArvore(x->esq));
+            break;
+        }
+    else
+        return 0.0;
+
+    return aux;
 }
