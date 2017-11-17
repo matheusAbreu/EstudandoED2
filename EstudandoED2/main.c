@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 5
+#define MAX 20
 #include "procurando.h"
 #include "uni3.h"
 
@@ -21,7 +21,7 @@ void main()
     printf("\n\n\n\n\n");
     
        
-    ordenandoInteirosCresc(vet, MAX);
+    shellSort(vet, MAX);
     imprimindoVet(vet, MAX);
      
 }

@@ -20,6 +20,7 @@ extern "C" {
 
 void ordenandoInteirosCresc(int *x, int tam);
 void ordenandoInteirosDecresc(int *x, int tam);
+void shellSort(int *vet, int n);
 
 #ifdef __cplusplus
 }

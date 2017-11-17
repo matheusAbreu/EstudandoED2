@@ -35,3 +35,31 @@ void ordenandoInteirosDecresc(int *x, int tam)//Analise do cod 00
         x[j] = aux[j];
    
 }
+void shellSort(int *vet, int n)
+{
+    int i, j, h =1, item;
+    
+    do
+        h = h*3;
+    while(h < n);
+    do
+    {
+        h /= 3;
+        for(i=h;i<=n;i++)
+        {
+            item = vet[i];
+            j = i;
+            while(vet[j-h] > item)
+            {
+                vet[j] = vet[j-h];
+                j -= h;
+                if(j <= h)
+                    break;
+            }
+            vet[j]=item;
+            
+            imprimindoVet(vet, 20);
+            printf("\n\n");
+        }
+    }while(h != 0);
+}
