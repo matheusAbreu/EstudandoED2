@@ -25,6 +25,10 @@ void EscreveNo(no *x);
 no *CriaNo();
 void InserirNo(grafo *x);
 void RemoverNo(grafo *x, no *y);
+void ApagarGrafo(grafo *x);
+void InserirCaminho(grafo *x, int posY, int posZ, int peso);
+void ImprimindoNo(no *x);
+void ImprimindoMatrizDoGrafo(grafo *x);
 
 #ifdef __cplusplus
 }

@@ -101,3 +101,54 @@ void RemoverNo(grafo *x, no *y)
         x->conteudo=(no**)realloc((x->qnt)*sizeof(no*));
     }
 }
+void ApagarGrafo(grafo *x)
+{
+    int i,j;
+    for(i =0; i < x->qnt; i++)
+    {
+        for(j = 0; j < x->conteudo[i]->qntliga;j++)
+            free((x->conteudo[i]->liga[j]));
+        
+        free((x->conteudo[i]->peso));
+        free((x->conteudo[i]->liga));
+        free((x->conteudo[i]));
+    }
+    free(x->conteudo);
+    LimpaGrafo(x);
+}
+void InserirCaminho(grafo *x, int posY, int posZ, int peso)
+{
+    if(posY < x->qnt && posZ < x->qnt)
+    {
+        x->conteudo[posY]->liga = (no**) realloc((x->conteudo[posY]->qntliga+1)*sizeof(no*));
+        x->conteudo[posY]->peso = (int*) realloc((x->conteudo[posY]->qntliga+1)*sizeof(int));
+        x->conteudo[posY]->liga[x->conteudo[posY]->qntliga] = x->conteudo[posZ];
+        x->conteudo[posY]->peso[x->conteudo[posY]->qntliga] = peso;
+        x->conteudo[posY]->qntliga++;
+        
+        x->conteudo[posZ]->liga = (no**) realloc((x->conteudo[posZ]->qntliga+1)*sizeof(no*));
+        x->conteudo[posZ]->peso = (int*) realloc((x->conteudo[posZ]->qntliga+1)*sizeof(int));
+        x->conteudo[posZ]->liga[x->conteudo[posZ]->qntliga] = x->conteudo[posZ];
+        x->conteudo[posZ]->peso[x->conteudo[posZ]->qntliga] = peso;
+        x->conteudo[posZ]->qntliga++;
+    }
+    else
+        printf("\nUm dos nos nao foi encontrado\n");
+}
+void ImprimindoNo(no *x)
+{
+    int i;
+    printf("|no:%c|:", x->info);
+    for(i =0; i< x->qntliga; i++)
+        printf("->|i:%c|p:%d|", x->liga[i], x->peso[i]);
+}
+void ImprimindoMatrizDoGrafo(grafo *x)
+{
+    int i;
+    printf("\nGrafo:");
+    for(i =0; i<x->qnt;i++)
+    {
+        printf("\n%d:", i);
+        ImprimindoNo(x->conteudo[i]);
+    }
+}
