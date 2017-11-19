@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,13 +12,12 @@
  * Created on 17 de Novembro de 2017, 11:58
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 
 /*
  * 
  */
-int main(int argc, char** argv) {
+int main(int argc, char** argv) 
+{
 
     return (EXIT_SUCCESS);
 }
