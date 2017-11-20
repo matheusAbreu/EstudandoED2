@@ -23,10 +23,13 @@ void LimpaNo(no *x);//nao libera memoria
 void LimpaGrafo(grafo *x);//nao libera memoria
 void EscreveNo(no *x);
 no *CriaNo();
+grafo *CriaGrafo();
 void InserirNo(grafo *x);
-void RemoverNo(grafo *x, no *y);
+void RemoverNo(grafo *x, int posY);
+void RemoverCaminho(grafo *x, int posY, int posZ);//Y é onde apagara, e Z é o no destino no qual deseja-se que se apague o caminho
 void ApagarGrafo(grafo *x);
-void InserirCaminho(grafo *x, int posY, int posZ, int peso);
+void InserirCaminhoDuplo(grafo *x, int posY, int posZ, int peso);//Insere o caminho entre os dois nós, ido e voltando
+void InserirCaminho(grafo *x, int posY, int posZ, int peso);//Insere o caminho do nó, posY para posZ
 void ImprimindoNo(no *x);
 void ImprimindoMatrizDoGrafo(grafo *x);
 
