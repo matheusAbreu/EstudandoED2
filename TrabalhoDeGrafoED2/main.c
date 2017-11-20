@@ -28,7 +28,8 @@ void main()
     InserirCaminho(x,4,0, 6);
     ImprimindoMatrizDoGrafo(x);
     //RemoverNo(x, 1);
-    ImprimindoMatrizDoGrafo(x);
+    //RemoverCaminho(x, 1,2);
+    //ImprimindoMatrizDoGrafo(x);
     ApagarGrafo(x);
 }
 

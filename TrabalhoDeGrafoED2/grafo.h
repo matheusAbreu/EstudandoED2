@@ -25,7 +25,7 @@ void EscreveNo(no *x);
 no *CriaNo();
 grafo *CriaGrafo();
 void InserirNo(grafo *x);
-void RemoverNo(grafo *x, int posY);
+void RemoverNo(grafo *x, int posY);//Nao funciona
 void RemoverCaminho(grafo *x, int posY, int posZ);//Y é onde apagara, e Z é o no destino no qual deseja-se que se apague o caminho
 void ApagarGrafo(grafo *x);
 void InserirCaminhoDuplo(grafo *x, int posY, int posZ, int peso);//Insere o caminho entre os dois nós, ido e voltando
