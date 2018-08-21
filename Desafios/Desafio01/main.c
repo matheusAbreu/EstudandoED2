@@ -43,7 +43,7 @@ void busqueSoma(int total, int *vet, int tam)
         }
 }
 
-void main(int argc, char** argv) 
+void main() 
 {
     int *vetor, total, tam, i;
     
@@ -74,5 +74,6 @@ void main(int argc, char** argv)
     }
     printf("\nO total = %d\n\n\n", total);
     busqueSoma(total,vetor,tam);
+    free(vetor);
 }
 
