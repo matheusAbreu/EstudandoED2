@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   main.c
  * Author: lema
@@ -13,6 +7,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#if linux
+#define LIMP __fpurge(stdin)
+#endif
+#if WIN32
+#define LIMP fflush(stdin)
+#endif
 
 /*
  * 
@@ -32,17 +33,46 @@ int *createVetorInt(int tam)
 void busqueSoma(int total, int *vet, int tam)
 {
     int i,j;
-    
+    printf("\nResultado:\n");
     for(i = 0; i < tam; i++)
-        for(j = (tam-1); j >= 0; j--)
+        for(j = (tam-1); j >= i; j--)
         {
-            printf ("i=%d j=%d\n", i,j);
+            if((vet[i]+vet[j]) == total)      
+                printf ("Posicoes %d e %d\n", i,j);
+            
         }
-    
 }
+
 void main(int argc, char** argv) 
 {
-    int *vetor, total, tam;
-    busqueSoma(0,vetor,10);
+    int *vetor, total, tam, i;
+    
+    srand((unsigned) time NULL);
+    
+    /*
+        tam = (rand()%100);
+        total =(rand()%100);
+    */
+    
+    printf("\nPor favor, insira o tamanho do vetor:\n");
+    scanf("%i", &tam);
+    LIMP;
+    
+    printf("Qual valor deseja tentar encontrar?(Randomizados sao todos menores que 100)\n");
+    scanf("%i", &total);
+    LIMP;
+    
+    vetor = createVetorInt(tam);
+    printf("Vetor criando!\nGereando numeros e realizando busca...\n");
+    for(i =0; i < tam;i++)
+    {
+        vetor[i] = (rand()%100);
+        printf((i<10)?("vetor[0%d] = %d\n"):("vetor[%d] = %d\n"), i, vetor[i]);
+        
+        if(i%10 == 0 && i != 0)
+            printf("\n");
+    }
+    printf("\nO total = %d\n\n\n", total);
+    busqueSoma(total,vetor,tam);
 }
 
