@@ -24,7 +24,9 @@ struct MEUTEXTO
 
 //struct MEUTEXTO typedef MeuTexto;
 void limpandoMeuTexto(MeuTexto *x);
-MeuTexto *crinadoMeuTexto();
+MeuTexto *criandoMeuTexto();
+void identificandoEspacos(MeuTexto *x);
+void copiandoMeuTexto(MeuTexto *dest, MeuTexto *ori, int ini, int fim);
 void imprimindoMeuTexto(MeuTexto *x);
 void escrevendoMeuTexto(MeuTexto *x);
 

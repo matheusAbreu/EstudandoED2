@@ -16,7 +16,7 @@ void limpandoMeuTexto(MeuTexto *x)
     x->tam =0;  
     x->qntEsp = 0;    
 }
-MeuTexto *crinadoMeuTexto()
+MeuTexto *criandoMeuTexto()
 {
     MeuTexto *x;
     
@@ -27,20 +27,23 @@ MeuTexto *crinadoMeuTexto()
     
     return x;
 }
-void criandoEspacos(MeuTexto *x, int novEsp)
+void identificandoEspacos(MeuTexto *x)
 {
-    int *temp, i;
+    int temp[x->tam], i, qntEsp =0;
     
-    temp = (int*)malloc((++x->qntEsp)*sizeof(int));
+    for(i =0; i<x->tam;i++)
+        if(x->vetor[i] == ' ')
+            temp[qntEsp++] = i;
+        
+    free(x->posEsp);
+    x->posEsp = (int*)malloc(qntEsp*sizeof(int));
     
-    if(temp != NULL)
+    if(x->posEsp != NULL)
     {
-        for(i=0;i<(x->qntEsp-1);i++)
-            temp[i] = x->posEsp[i];
+        for(i=0;i < qntEsp;i++)
+            x->posEsp[i] = temp[i];
 
-        temp[(x->qntEsp-1)] = novEsp; 
-        free(x->posEsp);
-        x->posEsp = temp;
+        x->qntEsp = qntEsp ;
     }
     else
         printf("\nHouve um erro na alocacao - Funcao:criandoEspaco\n");
@@ -60,18 +63,36 @@ void escrevendoMeuTexto(MeuTexto *x)
     {
         limpandoMeuTexto(x);
         x->vetor = (char*)malloc((tam+1)*sizeof(char));
+        
         if(x->vetor != NULL)
         {
             x->tam = tam;
             strcpy(x->vetor, temp);
-            for(i =0; i<tam;i++)
-                if(x->vetor[i] == ' ')
-                    criandoEspacos(x,i);
-               
+            identificandoEspacos(x);
         }
         else
             printf("\nHouve um erro na alocacao - Funcao:escrevendoMeuTexto\n");
     }
+    else
+            printf("\nHouve um erro na alocacao - Funcao:escrevendoMeuTexto\n");
+}
+void copiandoMeuTexto(MeuTexto *dest, MeuTexto *ori, int ini, int fim)
+{
+    int i;
+    
+        limpandoMeuTexto(dest);
+        dest->vetor = (char*)malloc((fim-ini+1)*sizeof(char));
+        if(dest->vetor != NULL)
+        {
+            dest->tam = (fim-ini)+1;
+            for(i =ini; i<fim;i++)
+                dest->vetor[i-ini] = ori->vetor[i];
+                    
+            identificandoEspacos(dest);
+        }
+        else
+            printf("\nHouve um erro na alocacao - Funcao:escrevendoMeuTexto\n");
+    
 }
 void imprimindoMeuTexto(MeuTexto *x)
 {
