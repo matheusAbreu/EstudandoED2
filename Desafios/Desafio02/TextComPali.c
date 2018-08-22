@@ -29,18 +29,18 @@ MeuTexto *crinadoMeuTexto()
 }
 void criandoEspacos(MeuTexto *x, int novEsp)
 {
-    int *temp, i = x->qntEsp;
-    temp = (int*)malloc((i+1)*sizeof(int));
+    int *temp, i;
+    
+    temp = (int*)malloc((++x->qntEsp)*sizeof(int));
     
     if(temp != NULL)
     {
-        for(i=0;i<x->qntEsp;i++)
+        for(i=0;i<(x->qntEsp-1);i++)
             temp[i] = x->posEsp[i];
-        
+
+        temp[(x->qntEsp-1)] = novEsp; 
         free(x->posEsp);
-        temp[x->qntEsp] = novEsp;
         x->posEsp = temp;
-        x->qntEsp++;
     }
     else
         printf("\nHouve um erro na alocacao - Funcao:criandoEspaco\n");
@@ -56,7 +56,6 @@ void escrevendoMeuTexto(MeuTexto *x)
     LIMP;
     
     tam = strlen(temp);
-    printf("\n%d\n", tam);
     if(tam > 2)
     {
         limpandoMeuTexto(x);
@@ -79,5 +78,5 @@ void imprimindoMeuTexto(MeuTexto *x)
     int i;
     printf("\n\nTamanhoda String: %d\nA String armazenada e: \"%s\"\nContendo %d espacos, nas casas:",x->tam, x->vetor,x->qntEsp);
     for(i = 0;i<x->qntEsp;i++)
-        printf((i==(x->qntEsp-1))?(" %d\n\n"):(" %d,"),x->posEsp);
+        printf((i==(x->qntEsp-1))?(" %d\n\n"):(" %d,"),x->posEsp[i]);
 }
