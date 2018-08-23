@@ -81,10 +81,10 @@ void copiandoMeuTexto(MeuTexto *dest, MeuTexto *ori, int ini, int fim)
     int i;
     
         limpandoMeuTexto(dest);
-        dest->vetor = (char*)malloc((fim-ini+1)*sizeof(char));
+        dest->vetor = (char*)malloc(((fim-ini)+1)*sizeof(char));
         if(dest->vetor != NULL)
         {
-            dest->tam = (fim-ini)+1;
+            dest->tam = (fim-ini);
             for(i =ini; i<fim;i++)
                 dest->vetor[i-ini] = ori->vetor[i];
                     
@@ -97,7 +97,92 @@ void copiandoMeuTexto(MeuTexto *dest, MeuTexto *ori, int ini, int fim)
 void imprimindoMeuTexto(MeuTexto *x)
 {
     int i;
-    printf("\n\nTamanhoda String: %d\nA String armazenada e: \"%s\"\nContendo %d espacos, nas casas:",x->tam, x->vetor,x->qntEsp);
-    for(i = 0;i<x->qntEsp;i++)
-        printf((i==(x->qntEsp-1))?(" %d\n\n"):(" %d,"),x->posEsp[i]);
+    printf("\n\nTamanhoda String: %d\nA String armazenada e: \"%s\"\nContendo %d espacos",x->tam, x->vetor,x->qntEsp);
+    if(x->qntEsp > 0)
+    {
+        printf(", nas casas:");
+        for(i = 0;i<x->qntEsp;i++)
+            printf((i==(x->qntEsp-1))?(" %d.\n\n"):(" %d,"),x->posEsp[i]);
+    }    
+}
+int verificandoPalindromo(MeuTexto *x, int ini, int fim)
+{
+    /*Retorna 1 se for palindro
+      Retorna 0 caso não seja*/
+    int i,j=0,k;
+    char temp[(fim-ini)+1];
+    
+    for(i=0; i<(fim-ini)+1;i++)
+    {
+        if( !(x->vetor[ini+i] == '.' || x->vetor[ini+i] == ',' || x->vetor[ini+i] == '?' ||
+                x->vetor[ini+i] == '!' || x->vetor[ini+i] == ';' || x->vetor[ini+i] == ':' ||
+                x->vetor[ini+i] == '[' || x->vetor[ini+i] == '[' || x->vetor[ini+i] == '-' ||
+                x->vetor[ini+i] == '@' || x->vetor[ini+i] == '#' || x->vetor[ini+i] == ']' ||
+                x->vetor[ini+i] == '$' || x->vetor[ini+i] == '%' || x->vetor[ini+i] == '&' ||
+                x->vetor[ini+i] == '*' || x->vetor[ini+i] == '(' || x->vetor[ini+i] == ')' ||
+                x->vetor[ini+i] == '{' || x->vetor[ini+i] == '}' || x->vetor[ini+i] == '[' ||
+                 x->vetor[ini+i] == ' '))
+            temp[i-j] = x->vetor[ini+i];
+        else
+            j++;
+    }
+    
+    for(i=0,k=(fim-ini)-j; i<=k;i++,k--)
+        if(temp[i] != temp[k])
+            return 0;
+    
+    /*for(i=ini,j=fim; i<=j;i++,j--)
+        if((x->vetor[i] != x->vetor[j]))
+                return 0;*/
+    
+    
+    return 1;
+}
+MeuTexto *procurandoMaiorPalindro(MeuTexto *x)
+{
+    MeuTexto *pali = criandoMeuTexto();
+    int maiorIntr[] = {0,0}, j, i,espI =0, espJ;
+    
+    for(i=0; i< x->tam;i++)
+    {   
+        espJ =0;
+        if( !(x->vetor[i] == '.' || x->vetor[i] == ',' || x->vetor[i] == '?' ||
+                x->vetor[i] == '!' || x->vetor[i] == ';' || x->vetor[i] == ':' ||
+                x->vetor[i] == '[' || x->vetor[i] == '[' || x->vetor[i] == '-' ||
+                x->vetor[i] == '@' || x->vetor[i] == '#' || x->vetor[i] == ']' ||
+                x->vetor[i] == '$' || x->vetor[i] == '%' || x->vetor[i] == '&' ||
+                x->vetor[i] == '*' || x->vetor[i] == '(' || x->vetor[i] == ')' ||
+                x->vetor[i] == '{' || x->vetor[i] == '}' || x->vetor[i] == '[' ||
+                 x->vetor[i] == ' '))
+        {
+            for(j = x->tam - 1; j > i; j--)
+            {
+               if( !(x->vetor[j] == '.' || x->vetor[j] == ',' || x->vetor[j] == '?' ||
+                        x->vetor[j] == '!' || x->vetor[j] == ';' || x->vetor[j] == ':' ||
+                        x->vetor[j] == '[' || x->vetor[j] == '[' ||  x->vetor[j] == '-' ||
+                        x->vetor[j] == '@' || x->vetor[j] == '#' || x->vetor[j] == ']' ||
+                        x->vetor[j] == '$' || x->vetor[j] == '%' || x->vetor[j] == '&' ||
+                        x->vetor[j] == '*' || x->vetor[j] == '(' || x->vetor[j] == ')' ||
+                        x->vetor[j] == '{' || x->vetor[j] == '}' || x->vetor[j] == '[' ||
+                       x->vetor[j] == ' '))
+               {
+                    if(x->vetor[i] == x->vetor[j] && (j-i) > (maiorIntr[1]-maiorIntr[0]))
+                    {
+                        if(verificandoPalindromo(x, i, j)==1)
+                        {
+                            copiandoMeuTexto(pali, x, i,j+1);
+                            maiorIntr[0] = i;
+                            maiorIntr[1] = j;
+                            j = x->posEsp[(x->qntEsp-(++espJ))];
+                        }
+                    }
+                    else if((x->qntEsp - espJ) >= 0)
+                        j = x->posEsp[(x->qntEsp-(++espJ))];
+               }
+            }
+            if(espI <= (x->qntEsp-1))
+                i = x->posEsp[espI++];
+        }
+    }
+    return pali;
 }

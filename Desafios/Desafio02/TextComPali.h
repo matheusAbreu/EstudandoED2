@@ -29,6 +29,8 @@ void identificandoEspacos(MeuTexto *x);
 void copiandoMeuTexto(MeuTexto *dest, MeuTexto *ori, int ini, int fim);
 void imprimindoMeuTexto(MeuTexto *x);
 void escrevendoMeuTexto(MeuTexto *x);
+int verificandoPalindromo(MeuTexto *y, int ini, int fim);
+MeuTexto *procurandoMaiorPalindro(MeuTexto *x);
 
 #endif /* TEXTCOMPALI_H */
 
