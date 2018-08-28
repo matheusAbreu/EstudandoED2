@@ -13,14 +13,16 @@ void main()
     MeuTexto *y, *pali;
     int ini, fim;
     y = criandoMeuTexto();
-    //cpy = criandoMeuTexto();
-    printf("Escreva seu texto:\n\n");
-    
+    printf("\nManual:\n");
+    printf("1 - Nao use letras maisculas\n");
+    printf("2 - Nao utilize acentos\n");
+    printf("3 - pontuações, parenteses, colchetes, chaves, arroba, sharp e espacos serao ignorados na comparação palindrica\n");
+    printf("\nEscreva seu texto:\n");
     escrevendoMeuTexto(y);
     printf("\nVerifique o que salvamos\n");
     
     imprimindoMeuTexto(y);
-    printf("\nVeja esse o maior palindromo que pegamos do seu texto:\n\n");
+    printf("\nVeja esse o maior palindromo que pegamos do seu texto:");
     
     pali = procurandoMaiorPalindro(y);
    

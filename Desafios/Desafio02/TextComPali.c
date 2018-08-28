@@ -97,13 +97,30 @@ void copiandoMeuTexto(MeuTexto *dest, MeuTexto *ori, int ini, int fim)
 void imprimindoMeuTexto(MeuTexto *x)
 {
     int i;
-    printf("\n\nTamanhoda String: %d\nA String armazenada e: \"%s\"\nContendo %d espacos",x->tam, x->vetor,x->qntEsp);
+    printf("\n\nTamanho da String: %d\nA String armazenada e: \"%s\"\nContendo %d espacos",x->tam, x->vetor,x->qntEsp);
     if(x->qntEsp > 0)
     {
         printf(", nas casas:");
         for(i = 0;i<x->qntEsp;i++)
             printf((i==(x->qntEsp-1))?(" %d.\n\n"):(" %d,"),x->posEsp[i]);
     }    
+}
+int verificandoCaracterEspecial(char c)
+{
+    /*Retorna 1 se for um caracter especial
+      Retorna 0 caso não seja*/
+    if((c == '.' || c == ',' || c == '?' ||
+        c == '!' || c == ';' || c == ':' ||
+        c == '[' || c == ' ' || c == '-' ||
+        c == '@' || c == '#' || c == ']' ||
+        c == '$' || c == '%' || c == '&' ||
+        c == '*' || c == '(' || c == ')' ||
+        c == '{' || c == '}' || c == '[' ))
+    {
+        return 1;
+    }
+    else
+        return 0;
 }
 int verificandoPalindromo(MeuTexto *x, int ini, int fim)
 {
@@ -114,14 +131,7 @@ int verificandoPalindromo(MeuTexto *x, int ini, int fim)
     
     for(i=0; i<(fim-ini)+1;i++)
     {
-        if( !(x->vetor[ini+i] == '.' || x->vetor[ini+i] == ',' || x->vetor[ini+i] == '?' ||
-                x->vetor[ini+i] == '!' || x->vetor[ini+i] == ';' || x->vetor[ini+i] == ':' ||
-                x->vetor[ini+i] == '[' || x->vetor[ini+i] == '[' || x->vetor[ini+i] == '-' ||
-                x->vetor[ini+i] == '@' || x->vetor[ini+i] == '#' || x->vetor[ini+i] == ']' ||
-                x->vetor[ini+i] == '$' || x->vetor[ini+i] == '%' || x->vetor[ini+i] == '&' ||
-                x->vetor[ini+i] == '*' || x->vetor[ini+i] == '(' || x->vetor[ini+i] == ')' ||
-                x->vetor[ini+i] == '{' || x->vetor[ini+i] == '}' || x->vetor[ini+i] == '[' ||
-                 x->vetor[ini+i] == ' '))
+        if(!verificandoCaracterEspecial(x->vetor[ini+i]))
             temp[i-j] = x->vetor[ini+i];
         else
             j++;
@@ -129,13 +139,8 @@ int verificandoPalindromo(MeuTexto *x, int ini, int fim)
     
     for(i=0,k=(fim-ini)-j; i<=k;i++,k--)
         if(temp[i] != temp[k])
-            return 0;
-    
-    /*for(i=ini,j=fim; i<=j;i++,j--)
-        if((x->vetor[i] != x->vetor[j]))
-                return 0;*/
-    
-    
+        {return 0;}
+  
     return 1;
 }
 MeuTexto *procurandoMaiorPalindro(MeuTexto *x)
@@ -146,25 +151,11 @@ MeuTexto *procurandoMaiorPalindro(MeuTexto *x)
     for(i=0; i< x->tam;i++)
     {   
         espJ =0;
-        if( !(x->vetor[i] == '.' || x->vetor[i] == ',' || x->vetor[i] == '?' ||
-                x->vetor[i] == '!' || x->vetor[i] == ';' || x->vetor[i] == ':' ||
-                x->vetor[i] == '[' || x->vetor[i] == '[' || x->vetor[i] == '-' ||
-                x->vetor[i] == '@' || x->vetor[i] == '#' || x->vetor[i] == ']' ||
-                x->vetor[i] == '$' || x->vetor[i] == '%' || x->vetor[i] == '&' ||
-                x->vetor[i] == '*' || x->vetor[i] == '(' || x->vetor[i] == ')' ||
-                x->vetor[i] == '{' || x->vetor[i] == '}' || x->vetor[i] == '[' ||
-                 x->vetor[i] == ' '))
+        if( !verificandoCaracterEspecial(x->vetor[i]))
         {
             for(j = x->tam - 1; j > i; j--)
             {
-               if( !(x->vetor[j] == '.' || x->vetor[j] == ',' || x->vetor[j] == '?' ||
-                        x->vetor[j] == '!' || x->vetor[j] == ';' || x->vetor[j] == ':' ||
-                        x->vetor[j] == '[' || x->vetor[j] == '[' ||  x->vetor[j] == '-' ||
-                        x->vetor[j] == '@' || x->vetor[j] == '#' || x->vetor[j] == ']' ||
-                        x->vetor[j] == '$' || x->vetor[j] == '%' || x->vetor[j] == '&' ||
-                        x->vetor[j] == '*' || x->vetor[j] == '(' || x->vetor[j] == ')' ||
-                        x->vetor[j] == '{' || x->vetor[j] == '}' || x->vetor[j] == '[' ||
-                       x->vetor[j] == ' '))
+               if( !verificandoCaracterEspecial(x->vetor[j]))
                {
                     if(x->vetor[i] == x->vetor[j] && (j-i) > (maiorIntr[1]-maiorIntr[0]))
                     {
