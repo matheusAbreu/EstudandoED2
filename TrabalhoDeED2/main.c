@@ -2,20 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ArvoreDeExecucao.h"
-#define MAX 50
-//Definindo pro compilador: limpador de buffer e limpador de tela
-#if linux
-#define LIMBUF __fpurge(stdin)
-#define CLS system("clear")
-#endif  //linux
-#if WIN32
-#define LIMBUF fflush(stdin)
-#define CLS system("cls")
-#endif // WIN32
-/*
- * 
- */
-int main(int argc, char** argv)
+
+void main()
 {
     int i;
     char express[MAX];
@@ -38,6 +26,5 @@ int main(int argc, char** argv)
     printf("\n\n");
     cortandoGalho(test);
 
-    return (EXIT_SUCCESS);
 }
 

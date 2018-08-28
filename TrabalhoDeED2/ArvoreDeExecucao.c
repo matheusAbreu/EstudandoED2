@@ -1,7 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ArvoreDeExecucao.h"
+#define MAX 50
+//Definindo pro compilador: limpador de buffer e limpador de tela
+#if linux
+#define LIMBUF __fpurge(stdin)
+#define CLS system("clear")
+#endif  //linux
+#if WIN32
+#define LIMBUF fflush(stdin)
+#define CLS system("cls")
+#endif // WIN32
+
+typedef struct ARVORE
+    {
+        float valor;
+        char express;
+        struct ARVORE *dir, *esq;
+    }tree;
 tree *criandoRamo()
 {
     tree *novo;
@@ -171,13 +187,13 @@ void escrevendoExpresao(tree *x, char *ex, int tam)// </editor-fold>
     
     
 }
-int testaNumero(char x)
+/* int testaNumero(char x)
 {
     if(x == '0' ||x == '1' ||x == '2' ||x == '3' ||x == '4' ||x == '5' ||x == '6' ||x == '7' ||x == '8' ||x == '9')
         return 1;
     else
         return 0;
-}
+}*/
 float calculandoArvore(tree *x)
 {
     float aux;

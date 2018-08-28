@@ -25,8 +25,6 @@ void main()
     printf("\nVeja esse o maior palindromo que pegamos do seu texto:");
     
     pali = procurandoMaiorPalindro(y);
-   
-    
     imprimindoMeuTexto(pali);
     printf("\n\n\n");
     //Fechando o programa
