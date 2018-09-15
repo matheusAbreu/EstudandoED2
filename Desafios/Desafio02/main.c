@@ -14,9 +14,10 @@ void main()
     int ini, fim;
     y = criandoMeuTexto();
     printf("\nManual:\n");
-    printf("1 - Nao use letras maisculas\n");
-    printf("2 - Nao utilize acentos\n");
-    printf("3 - pontuações, parenteses, colchetes, chaves, arroba, sharp e espacos serao ignorados na comparação palindrica\n");
+    printf("1 - Não use letras maiúsculas\n");
+    printf("2 - Não utilize acentos\n");
+    printf("3 - Pontuações, parênteses, colchetes, chaves, arroba, sharp e/ou espaços serão ignorados na comparação palíndrica\n");
+    printf("4 - O Texto tem que ter menos que 10.000 caracteres\n");
     printf("\nEscreva seu texto:\n");
     escrevendoMeuTexto(y);
     printf("\nVerifique o que salvamos\n");
