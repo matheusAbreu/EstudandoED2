@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX 50
 //Definindo pro compilador: limpador de buffer e limpador de tela
@@ -26,14 +27,16 @@
 extern "C" {
 #endif
 
+struct MEUTEXTO typedef texto;
 struct ARVORE_CONTA typedef tree;
+
 /*Então essa estrutura foi pensada para seguir
 a propia desempilhação, porém para que ela funcione precisa seguir um coerencia
 de execução, que é
-                                  Nó(pai|Central) - será tratado como o resultado 
+               Nó(Pai|Central) - será tratado como o resultado 
                                   / \
                                  /   \
-  Nó(dir) - valor em precedencia      Nó(Esq) - resultado da prox conta
+  Nó(Dir) - valor em precedencia      Nó(Esq) - resultado da prox conta
                                   
 Explicada a estrutura, vamos ao comportamento:
 0 - A Expressão recebida TEM A OBRIGAÇÃO DE SER infixa
@@ -49,7 +52,16 @@ Explicada a estrutura, vamos ao comportamento:
     4.4 (em caso de (),[],{}) - Será criado um nó-dir(que receberá (, [,{) para garantir a precedencia, e seu nó-(filho)Dir irá receber as espressões
          4.4.1 (O degrau (,[ ou {)- O ramo nulo é usado para checar se o parenteses, chaves ou colchetes fecharam, caso sim, o mesmo é removido e a conta de dentro é encaixada na expressão total, caso o contrario, um erro retorna */ 
 
-
+texto *recebendoExpressao();
+texto *criandoTexto();
+tree *criandoRamo();//As arvores criadas já saem nulas
+tree *EscrevendoArvoreExec(texto *expres);
+void anulandoRamo(tree *x);
+void apagandoTexto(texto *x);
+void imprimindoTexto(texto *x);
+float pegandoNumeroNoTexto(texto *x, int iniPos);
+void imprimindoArvore(tree *x, int nivel);
+int testaGalhoInfoNula(tree *x);
 #ifdef __cplusplus
 }
 #endif
