@@ -5,13 +5,14 @@
 
 void main()
 {
-    texto *y;
+    texto *t;
     tree *test;
     printf("\n Simplesmente escreva\n ");
-    y = recebendoExpressao();
+    t = recebendoExpressao();
     printf("\n Deixa eu ver o que eu escrevi:\n");
-    imprimindoTexto(y);
+    imprimindoTexto(t);
     
+    test = escrevendoArvoreExec(t);
     imprimindoArvore(test,0);
 }
 

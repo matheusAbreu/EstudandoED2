@@ -52,10 +52,12 @@ Explicada a estrutura, vamos ao comportamento:
     4.4 (em caso de (),[],{}) - Será criado um nó-dir(que receberá (, [,{) para garantir a precedencia, e seu nó-(filho)Dir irá receber as espressões
          4.4.1 (O degrau (,[ ou {)- O ramo nulo é usado para checar se o parenteses, chaves ou colchetes fecharam, caso sim, o mesmo é removido e a conta de dentro é encaixada na expressão total, caso o contrario, um erro retorna */ 
 
+
+
 texto *recebendoExpressao();
 texto *criandoTexto();
 tree *criandoRamo();//As arvores criadas já saem nulas
-tree *EscrevendoArvoreExec(texto *expres);
+tree *escrevendoArvoreExec(texto *expres);
 void anulandoRamo(tree *x);
 void apagandoTexto(texto *x);
 void imprimindoTexto(texto *x);

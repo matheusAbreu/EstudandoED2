@@ -39,7 +39,7 @@ texto *criandoTexto()
 texto *recebendoExpressao()
 {
     int tam;
-    char temp[1000], *expres;
+    char temp[100], *expres;
     texto *y;
     y = criandoTexto();
     
@@ -49,14 +49,14 @@ texto *recebendoExpressao()
     tam = strlen(temp);
     if(tam > 2)
     {
-        expres = NULL;
-        expres = (char*)malloc((tam+1)*sizeof(char));
+        y->valor = NULL;
+        y->valor = (char*)malloc((tam+1)*sizeof(char));
         
-        if(expres != NULL)
+        if(y->valor != NULL)
         {
-            strcpy(expres, temp);
+            strcpy(y->valor, temp);
             y->tam = tam;
-            y->valor=expres;
+            y->valor[tam] = '\0';
             return y;
         }
         else
@@ -110,8 +110,11 @@ float pegandoNumeroNoTexto(texto *x, int iniPos)
     
     return atof(temp);
 }
-void imprimindoTexto(texto *x){printf("%s", x->valor);}
-tree *EscrevendoArvoreExec(texto *expres)
+void imprimindoTexto(texto *x)
+{
+    printf("%s", x->valor);
+}
+tree *escrevendoArvoreExec(texto *expres)
 /*1 -  se a expressao tiver valor
   0 - caso não*/
 {
@@ -131,17 +134,20 @@ tree *EscrevendoArvoreExec(texto *expres)
                     
                     if(x->express == NULL && x->dir == NULL)
                     {
-                        x->dir = criandoRamo();
-                        x->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
-                        x->express = expres->valor[i];
-                    }
-                    //testando se a ultima expressao usada é da mesma precedencia
-                    else if('-' == ultEsp ||'+' == ultEsp )
-                    {
                         x->esq = criandoRamo();
                         x->esq->valor = pegandoNumeroNoTexto(expres, iniPos);
-                        temp = criandoRamo();
-                        temp->dir = x;
+                        ultEsp = x->express = expres->valor[i];
+                        
+                    }
+                    else if('-' == ultEsp ||'+' == ultEsp )
+                    {
+                        x->dir = criandoRamo();
+                        x->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        noCab = criandoRamo();
+                        noCab->esq = x;
+                        noCab->express = expres->valor[i];
+                        x = noCab;
+                       
                     }
                    iniPos = i+1; 
                 break;
@@ -172,7 +178,7 @@ tree *EscrevendoArvoreExec(texto *expres)
     {
         x->valor = pegandoNumeroNoTexto(expres, iniPos);
     }
-    
+    return noCab;
 }
 void imprimindoArvore(tree *x, int nivel)
 {
