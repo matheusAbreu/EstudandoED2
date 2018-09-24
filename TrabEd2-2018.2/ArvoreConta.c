@@ -114,6 +114,70 @@ void imprimindoTexto(texto *x)
 {
     printf("%s", x->valor);
 }
+texto *extraindoParentes(texto *expres, char abertura, int pntAbert)
+{
+  texto *x;
+  x = criandoTexto();
+  int i, fechadura = 0;/*fechadura é a variavel que indica se o parentes, 
+                        * chaves ou colchetes foram fechados devidamente
+                        Caso contrario, a expressão retorna errada*/
+  pntAbert++;
+  switch(abertura)
+  {
+      case '(':
+          for(i=pntAbert; i<expres->tam; i++)
+          {
+              if(expres->valor[i] == ')')
+              {
+                  fechadura = 1;
+                  break;
+              }
+          }
+          break;
+        case '[':
+          for(i=pntAbert;  i<expres->tam; i++)
+          {
+              if(expres->valor[i] == ']')
+              {
+                  fechadura = 1;
+                  break;
+              }
+          }
+        break;
+        case '{':
+          for(i=pntAbert; i<expres->tam; i++)
+          {
+              if(expres->valor[i] == '}')
+              {
+                  fechadura = 1;
+                  break;
+              }
+          }
+          break;
+  }
+  if(fechadura)
+  {
+      x->valor = (char*)malloc((i-pntAbert)*sizeof(char));
+      if(x->valor == NULL)
+      {
+        free(x);
+        printf("\nHouve um erro na alocacao - Funcao:extraindoParentes\n");
+        return NULL;
+      }
+      x->tam = (i-pntAbert);
+      for(i=0;i < x->tam; i++)
+         x->valor[i] = expres->valor[pntAbert + i];
+      
+      x->valor[x->tam] = '\0';
+      return x;
+  }
+  else
+  {
+      free(x);
+      printf("\nHouve um erro na alocacao - Funcao:extraindoParentes\n");
+      return NULL;
+  }
+}
 tree *escrevendoArvoreExec(texto *expres)
 /*1 -  se a expressao tiver valor
   0 - caso não*/
@@ -121,7 +185,8 @@ tree *escrevendoArvoreExec(texto *expres)
     int i, iniPos = 0;
     char ultEsp = NULL;
     float valor = 0.0;
-    tree *x, *noCab, *temp;
+    texto *temp;
+    tree *x, *noCab;
     noCab = x = criandoRamo();
     
         for(i=1; i < expres->tam;i++)
@@ -137,7 +202,6 @@ tree *escrevendoArvoreExec(texto *expres)
                         x->esq = criandoRamo();
                         x->esq->valor = pegandoNumeroNoTexto(expres, iniPos);
                         ultEsp = x->express = expres->valor[i];
-                        
                     }
                     else if('-' == ultEsp ||'+' == ultEsp )
                     {
@@ -172,8 +236,7 @@ tree *escrevendoArvoreExec(texto *expres)
                     {
                         x->esq = criandoRamo();
                         x->esq->valor = pegandoNumeroNoTexto(expres, iniPos);
-                        ultEsp = x->express = expres->valor[i];
-                        
+                        ultEsp = x->express = expres->valor[i];                        
                     }
                     else if('-' == ultEsp ||'+' == ultEsp )
                     {
@@ -193,35 +256,27 @@ tree *escrevendoArvoreExec(texto *expres)
                         ultEsp = noCab->express = expres->valor[i];
                         noCab->esq = x;
                         x = noCab;
-                    }
-                    
+                    }          
                     iniPos = i+1; 
                     break;
                     
                 //A "abertura dos parenteses"    
                 case '(':
-                    break;
                 case '[':
-                    break;
                 case '{':
-                    break;
+                    temp = extraindoParentes(expres, expres->valor[i], i);
                     
-                //O Fechamento dos "parenteses"
-                case ')':
-                    break;
-                case '}':
-                    break;
-                case ']':
-                    break;
                     
+                break;                  
             }
         }
     if(iniPos < i)
     {
         if(!testaGalhoInfoNula(noCab))
-        {   
+        {  
             noCab->dir = criandoRamo();
             noCab->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+            
         }
     }
     return noCab;

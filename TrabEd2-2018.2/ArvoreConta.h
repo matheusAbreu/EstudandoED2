@@ -53,7 +53,7 @@ Explicada a estrutura, vamos ao comportamento:
          4.4.1 (O degrau (,[ ou {)- O ramo nulo é usado para checar se o parenteses, chaves ou colchetes fecharam, caso sim, o mesmo é removido e a conta de dentro é encaixada na expressão total, caso o contrario, um erro retorna */ 
 
 
-
+texto *extraindoParentes(texto *expres, char abertura, int pntAbert);
 texto *recebendoExpressao();
 texto *criandoTexto();
 tree *criandoRamo();//As arvores criadas já saem nulas
