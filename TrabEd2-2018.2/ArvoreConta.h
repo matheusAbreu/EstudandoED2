@@ -63,7 +63,7 @@ void apagandoTexto(texto *x);
 void imprimindoTexto(texto *x);
 float pegandoNumeroNoTexto(texto *x, int iniPos);
 void imprimindoArvore(tree *x, int nivel);
-int testaGalhoInfoNula(tree *x);
+int testaGalhoInfoNula(tree *x);//Se for nulo retorna verdade 
 #ifdef __cplusplus
 }
 #endif

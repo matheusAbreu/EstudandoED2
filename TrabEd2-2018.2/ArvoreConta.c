@@ -102,7 +102,7 @@ float pegandoNumeroNoTexto(texto *x, int iniPos)
         return 0.0;
     }
     else
-        for(j=iniPos; j<i;j++)
+        for(j=0; (j+iniPos)<i;j++)
             temp[j] = x->valor[iniPos+j];
     
     temp[(i-iniPos)+1] = '\0';
@@ -132,7 +132,43 @@ tree *escrevendoArvoreExec(texto *expres)
                 case '+':
                 case '-':
                     
-                    if(x->express == NULL && x->dir == NULL)
+                    if(x->express == NULL && x->esq == NULL)
+                    {
+                        x->esq = criandoRamo();
+                        x->esq->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        ultEsp = x->express = expres->valor[i];
+                        
+                    }
+                    else if('-' == ultEsp ||'+' == ultEsp )
+                    {
+                        
+                        noCab = criandoRamo();
+                        x->dir = criandoRamo();
+                        x->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        ultEsp = noCab->express = expres->valor[i];
+                        noCab->esq = x;
+                        x = noCab;
+                    }
+                    else if('*' == ultEsp ||'/' == ultEsp )
+                    {
+                        if(x->dir != NULL)
+                            x->dir->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        else
+                        {
+                            x->dir = criandoRamo();
+                            x->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        }
+                        noCab = criandoRamo();
+                        noCab->esq = x;
+                        ultEsp = noCab->express = expres->valor[i];
+                        x = noCab;
+                    }
+                   iniPos = i+1; 
+                break;
+                case '*':
+                case '/':
+                    
+                    if(x->express == NULL && x->esq == NULL)
                     {
                         x->esq = criandoRamo();
                         x->esq->valor = pegandoNumeroNoTexto(expres, iniPos);
@@ -142,18 +178,24 @@ tree *escrevendoArvoreExec(texto *expres)
                     else if('-' == ultEsp ||'+' == ultEsp )
                     {
                         x->dir = criandoRamo();
-                        x->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
-                        noCab = criandoRamo();
-                        noCab->esq = x;
-                        noCab->express = expres->valor[i];
-                        x = noCab;
-                       
+                        x->dir->dir = criandoRamo();
+                        x->dir->esq = criandoRamo();
+                        x->dir->esq->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        ultEsp = x->dir->express = expres->valor[i];
                     }
-                   iniPos = i+1; 
-                break;
-                case '*':
-                    break;
-                case '/':
+                    else if('*' == ultEsp ||'/' == ultEsp )
+                    {
+                        noCab = criandoRamo();
+                        if(x->dir == NULL)
+                            x->dir = criandoRamo();
+                        
+                        x->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+                        ultEsp = noCab->express = expres->valor[i];
+                        noCab->esq = x;
+                        x = noCab;
+                    }
+                    
+                    iniPos = i+1; 
                     break;
                     
                 //A "abertura dos parenteses"    
@@ -176,7 +218,11 @@ tree *escrevendoArvoreExec(texto *expres)
         }
     if(iniPos < i)
     {
-        x->valor = pegandoNumeroNoTexto(expres, iniPos);
+        if(!testaGalhoInfoNula(noCab))
+        {   
+            noCab->dir = criandoRamo();
+            noCab->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
+        }
     }
     return noCab;
 }
@@ -197,15 +243,15 @@ void imprimindoArvore(tree *x, int nivel)
     else
         printf("\n%s%c", aux, x->express);
     
-    if(x->esq != NULL)
-        imprimindoArvore(x->esq, (nivel +1));
-    
     if(x->dir != NULL)
         imprimindoArvore(x->dir, (nivel +1));
+    
+    if(x->esq != NULL)
+        imprimindoArvore(x->esq, (nivel +1));
 }
 int testaGalhoInfoNula(tree *x)
 {
-    if(x->express == NULL && x->valor == 0.0f)
+    if(x->express == NULL && x->valor == 0.0f && x->dir == NULL && x->esq == NULL)
         return 1;
     else
         return 0;
