@@ -36,13 +36,13 @@ de execução, que é
                Nó(Pai|Central) - será tratado como o resultado 
                                   / \
                                  /   \
-  Nó(Dir) - valor em precedencia      Nó(Esq) - resultado da prox conta
+  Nó(Esq) - valor em precedencia      Nó(Dir) - resultado da prox conta
                                   
 Explicada a estrutura, vamos ao comportamento:
 0 - A Expressão recebida TEM A OBRIGAÇÃO DE SER infixa
 1 - Todo nó só poderá receber valor se não tiver não tiver filhos
 2 - Todo o nó central deverá ser um sinal(por mais que em outra arvore ele venha a ser filho, se ele for o nó central em alguma arvore, ele será considerado nó central)
-3 - Toda a conta considerada "precedente"(que venha a usar (); []; {}; ou simplesmente o fato de ser multiplicação ou divisao) será jogado para o ramo a direita
+3 - Toda a conta considerada "precedente"(que venha a usar (); []; {}; ou simplesmente o fato de ser multiplicação ou divisao) será jogado para o ramo a esq
     3.1 - se um valor novo surgir, e o nó que o receberá não tiver filhos, nem valor, seja de expressão ou numericos, ele será considerado o ramo central de uma proxima conta
             logo, ele jogará esse novo valor pra o nó-dir e armazenará a expresão que deverá a ser executada
 4 - Se uma nova expressão surgir e a arvore já esteja completa, haverá uma reorganização
@@ -62,7 +62,10 @@ void anulandoRamo(tree *x);
 void apagandoTexto(texto *x);
 void imprimindoTexto(texto *x);
 float pegandoNumeroNoTexto(texto *x, int iniPos);
+void imprimindoArvorePosFixa(tree *x);
 void imprimindoArvore(tree *x, int nivel);
+void liberandoArvore(tree *x);
+float calculandoArvore(tree *x);
 int testaGalhoInfoNula(tree *x);//Se for nulo retorna verdade 
 #ifdef __cplusplus
 }

@@ -79,6 +79,43 @@ void apagandoTexto(texto *x)
     x->valor = NULL;
     x->tam = 0;
 }
+void liberandoArvore(tree *x)
+{
+    if(x->esq != NULL)
+        liberandoArvore(x->esq);
+    
+    if(x->dir != NULL)
+        liberandoArvore(x->dir);
+    
+    
+    free(x);
+}
+float calculandoArvore(tree *x)
+{
+    float aux;
+    if(x->valor != 0.0f)
+        return x->valor;
+    else if(x->express != NULL)
+        switch(x->express)
+        {
+            case '+':
+                aux =(calculandoArvore(x->esq) + calculandoArvore(x->dir));
+            break;
+            case '-':
+                aux =(calculandoArvore(x->esq) - calculandoArvore(x->dir));
+            break;
+            case '*':
+                aux =(calculandoArvore(x->esq) * calculandoArvore(x->dir));
+            break;
+            case '/':
+                aux =(calculandoArvore(x->esq) / calculandoArvore(x->dir));
+            break;
+        }
+    else
+        return 0.0;
+
+    return aux;
+}
 int verificandoNumero(char y)
 {
     if(y=='0'|| y=='1'|| y=='2'|| y=='3'|| y=='4'|| y=='5'|| y=='6'|| y=='7'|| y=='8'|| y=='9'|| y=='.')
@@ -227,7 +264,7 @@ tree *escrevendoArvoreExec(texto *expres)
                         ultEsp = noCab->express = expres->valor[i];
                         x = noCab;
                     }
-                   iniPos = i+1; 
+                   iniPos = ++i; 
                 break;
                 case '*':
                 case '/':
@@ -257,27 +294,51 @@ tree *escrevendoArvoreExec(texto *expres)
                         noCab->esq = x;
                         x = noCab;
                     }          
-                    iniPos = i+1; 
+                    iniPos = ++i; 
                     break;
                     
                 //A "abertura dos parenteses"    
                 case '(':
                 case '[':
                 case '{':
+                    if(i == 1)
+                        i=0;
+                    
                     temp = extraindoParentes(expres, expres->valor[i], i);
                     
-                    
+                    if(x->express == NULL && x->esq == NULL)
+                    {
+                        free(x);
+                        noCab = x = escrevendoArvoreExec(temp);
+                        
+                    }
+                    else if('-' == ultEsp ||'+' == ultEsp )
+                    {
+                        for(x = noCab; x->dir != NULL; x = x->dir);
+                        
+                        x->dir = escrevendoArvoreExec(temp);
+                    }
+                    else if('*' == ultEsp ||'/' == ultEsp )
+                    {
+                       
+                    }          
+                    i += temp->tam;
+                    iniPos = i;
+                    free(temp);
                 break;                  
             }
-        }
+        }/*ACABA FOR*/
     if(iniPos < i)
     {
-        if(!testaGalhoInfoNula(noCab))
-        {  
-            noCab->dir = criandoRamo();
-            noCab->dir->valor = pegandoNumeroNoTexto(expres, iniPos);
-            
+        for(x = noCab; x->dir != NULL; x = x->dir);
+        
+        if(x->express != NULL)
+        {
+            x->dir = criandoRamo();
+            x = x->dir;
         }
+        
+        x->valor = pegandoNumeroNoTexto(expres, iniPos);
     }
     return noCab;
 }
@@ -303,6 +364,20 @@ void imprimindoArvore(tree *x, int nivel)
     
     if(x->esq != NULL)
         imprimindoArvore(x->esq, (nivel +1));
+}
+void imprimindoArvorePosFixa(tree *x)
+{
+        if(x->dir != NULL)
+    imprimindoArvorePosFixa(x->dir);
+    
+    if(x->esq != NULL)
+    imprimindoArvorePosFixa(x->esq);
+    
+    if(x->express == NULL)
+        printf("%.2f ", x->valor);
+    else
+        printf("%c ", x->express);
+
 }
 int testaGalhoInfoNula(tree *x)
 {

@@ -7,6 +7,7 @@ void main()
 {
     texto *t;
     tree *test;
+    float result;
     
     int i;
     printf("\n Simplesmente escreva\n ");
@@ -16,5 +17,13 @@ void main()
     
     test = escrevendoArvoreExec(t);
     imprimindoArvore(test,0);
+    printf("\n\n");
+    imprimindoArvorePosFixa(test);
+    
+    result = calculandoArvore(test);
+    printf("\nResultado = %.2f", result);
+    
+    liberandoArvore(test);
+    apagandoTexto(t);
 }
 
