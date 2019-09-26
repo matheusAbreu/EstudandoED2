@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1569525818 source:/home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/main.c
+	<stdio.h>
+	<stdlib.h>
+
