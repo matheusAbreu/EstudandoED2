@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "Ordenadores.h"
 void main()
 {
-    printf("Hello world!\n");
+    item *teste;
+    teste = CriandoListaRand(30, 100);
+
+    ImprimindoListaItem(teste);
+
+    ApagandoLista(teste);
+
+    ImprimindoListaItem(teste);
 }
