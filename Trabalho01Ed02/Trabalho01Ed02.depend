@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1569535728 source:/home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/main.c
+1569546612 source:/home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/main.c
 	<stdio.h>
 	<stdlib.h>
 	"Ordenadores.h"
 
-1569535321 /home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/Ordenadores.h
+1569546542 /home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/Ordenadores.h
 
-1569535740 source:/home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/Ordenadores.c
+1569546531 source:/home/abreu/Área de trabalho/EstudandoED2/Trabalho01Ed02/Ordenadores.c
 	<stdio.h>
 	<stdlib.h>
 	"Ordenadores.h"

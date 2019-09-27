@@ -4,11 +4,11 @@
 void main()
 {
     item *teste;
-    teste = CriandoListaRand(30, 100);
+    teste = CriandoListaRand(10000, 100);
 
     ImprimindoListaItem(teste);
 
-    ApagandoLista(teste);
+    teste = ApagandoLista(teste);
 
     ImprimindoListaItem(teste);
 }

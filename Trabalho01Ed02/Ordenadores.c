@@ -8,14 +8,14 @@ item *CriandoItem()
 
     x = (item*)malloc(1*sizeof(item));
 
-    if(x == NULL)
-    {
-        printf("\nHouve um erro na alocacao - CriandoItem\n");
-    }
-    else
+    if(x != NULL)
     {
         x->valor = 0;
         x->prox = NULL;
+    }
+    else
+    {
+        printf("\nHouve um erro na alocacao - CriandoItem\n");
     }
     return x;
 }
@@ -27,18 +27,24 @@ void ApagandoItem(item *x)
     {
         aux = x;
         x = x->prox;
+        aux->valor = NULL;
+        aux->prox = NULL;
         free(aux);
     }
     else
     {
+        x->valor = NULL;
+        x->prox = NULL;
         free(x);
         x = NULL;
     }
 }
-void ApagandoLista(item *x)
+item *ApagandoLista(item *x)
 {
     for(; x != NULL; x = x->prox)
         ApagandoItem(x);
+
+    return NULL;
 }
 item *CriandoListaRand(int qntitens, int randMax)
 {
@@ -54,7 +60,9 @@ item *CriandoListaRand(int qntitens, int randMax)
         aux->prox = CriandoItem();
         aux = aux->prox;
     }
+
     aux->valor = (rand() % randMax);
+
     return x;
 }
 void ImprimindoListaItem(item *x)
@@ -62,7 +70,9 @@ void ImprimindoListaItem(item *x)
     int i = 0;
     item *cont;
     if(x != NULL)
-        for(cont = x; cont != NULL; cont = cont->prox)
+    {
+        cont = x;
+        do
         {
             if(i < 10)
             {
@@ -74,7 +84,9 @@ void ImprimindoListaItem(item *x)
                 printf("%d\n", cont->valor);
                 i = 0;
             }
-        }
+            cont = cont->prox;
+        }while(cont != NULL);
+    }
     else
-        printf("A Lista está Vazia!");
+        printf("\nA Lista está Vazia!\n");
 }

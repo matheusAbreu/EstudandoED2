@@ -19,7 +19,7 @@ struct ITEM
 
 item *CriandoItem();
 void ApagandoItem(item *x);
-void ApagandoLista(item *x);
+item *ApagandoLista(item *x);
 item *CriandoListaRand(int qntitens, int randMax);
 void ImprimindoListaItem(item *x);
 
