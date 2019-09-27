@@ -4,7 +4,7 @@
 void main()
 {
     item *teste;
-    teste = CriandoListaRand(10000, 100);
+    teste = CriandoListaRand(100, 100);
 
     ImprimindoListaItem(teste);
 
